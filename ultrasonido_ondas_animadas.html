@@ -1,0 +1,176 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000}
+.wrap{background:#06080f;padding:18px;border-radius:8px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.col{display:flex;flex-direction:column;align-items:center;gap:8px}
+.lbl{color:#7ab4ff;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;text-align:center}
+.freq{color:#3a5a88;font-size:11px;text-align:center}
+canvas{border:1px solid #112244;border-radius:4px;display:block;background:#000}
+.btn{background:#0d1e3a;color:#7ab4ff;border:1px solid #1e3a66;padding:5px 14px;border-radius:4px;cursor:pointer;font-size:11px;letter-spacing:.5px;transition:background .2s}
+.btn:hover{background:#162d50}
+.btnall{background:#0a1528;color:#5a9aee;border:1px solid #1a3055;padding:7px 22px;border-radius:4px;cursor:pointer;font-size:12px;letter-spacing:.5px;margin-top:4px}
+.btnall:hover{background:#142040}
+.hint{color:#2a4468;font-size:10px;text-align:center;max-width:520px;line-height:1.5}
+</style>
+<div class="wrap">
+  <div class="row">
+    <div class="col">
+      <canvas id="cc" width="186" height="250"></canvas>
+      <div class="lbl">Convexo</div>
+      <div class="freq">2 – 5 MHz</div>
+      <button class="btn" onclick="dl('convexo')">↓ Sprite Sheet</button>
+    </div>
+    <div class="col">
+      <canvas id="cl" width="186" height="250"></canvas>
+      <div class="lbl">Lineal</div>
+      <div class="freq">5 – 10 MHz</div>
+      <button class="btn" onclick="dl('lineal')">↓ Sprite Sheet</button>
+    </div>
+    <div class="col">
+      <canvas id="cs" width="186" height="250"></canvas>
+      <div class="lbl">Sectorial</div>
+      <div class="freq">3.5 – 5 MHz</div>
+      <button class="btn" onclick="dl('sectorial')">↓ Sprite Sheet</button>
+    </div>
+  </div>
+  <button class="btnall" onclick="dlAll()">↓ Descargar los 3 Sprite Sheets</button>
+  <div class="hint">Cada sprite sheet = 32 frames (8×4) — listo para AnimatedSprite2D / AnimatedSprite3D en Godot 4.<br>Fondo negro puro: usá BlendMode = Add para efecto aditivo sobre tu escena 3D.</div>
+</div>
+<script>
+const cvs = { convexo: document.getElementById('cc'), lineal: document.getElementById('cl'), sectorial: document.getElementById('cs') };
+let startTs = null;
+
+function drawConvexo(ctx, t, w, h) {
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#000'; ctx.fillRect(0,0,w,h);
+  const cx=w/2, cy=0;
+  const sa=Math.PI*0.07, ea=Math.PI*0.93;
+  const maxR=Math.hypot(w,h)*0.95;
+  const N=14;
+  for(let i=0;i<N;i++){
+    const ph=((i/N)+t*0.55)%1;
+    const r=ph*maxR;
+    const a=Math.sin(ph*Math.PI);
+    if(a<0.03) continue;
+    ctx.save();
+    for(let g=4;g>=0;g--){
+      ctx.beginPath();
+      ctx.arc(cx,cy,r,sa,ea);
+      if(g===0){
+        ctx.lineWidth=1.8;
+        ctx.strokeStyle=`rgba(200,230,255,${a*0.95})`;
+        ctx.shadowBlur=0;
+      } else {
+        ctx.lineWidth=g*4.5;
+        ctx.strokeStyle=`rgba(60,140,255,${a*0.12})`;
+        ctx.shadowBlur=25; ctx.shadowColor=`rgba(80,170,255,0.6)`;
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+}
+
+function drawLineal(ctx, t, w, h) {
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#000'; ctx.fillRect(0,0,w,h);
+  const bw=w*0.72, bx=(w-bw)/2;
+  const N=16;
+  ctx.save();
+  ctx.beginPath(); ctx.rect(bx,0,bw,h); ctx.clip();
+  for(let i=0;i<N;i++){
+    const ph=((i/N)+t*0.5)%1;
+    const y=ph*h;
+    const a=Math.sin(ph*Math.PI);
+    if(a<0.03) continue;
+    const grad=ctx.createLinearGradient(bx,0,bx+bw,0);
+    const ca=a*0.85;
+    grad.addColorStop(0,`rgba(40,100,220,${ca*0.25})`);
+    grad.addColorStop(0.18,`rgba(100,180,255,${ca*0.8})`);
+    grad.addColorStop(0.5,`rgba(200,235,255,${ca})`);
+    grad.addColorStop(0.82,`rgba(100,180,255,${ca*0.8})`);
+    grad.addColorStop(1,`rgba(40,100,220,${ca*0.25})`);
+    for(let g=3;g>=0;g--){
+      ctx.beginPath();
+      ctx.moveTo(bx,y); ctx.lineTo(bx+bw,y);
+      if(g===0){
+        ctx.lineWidth=1.6; ctx.strokeStyle=grad; ctx.shadowBlur=0;
+      } else {
+        ctx.lineWidth=g*5; ctx.strokeStyle=`rgba(60,130,255,${a*0.1})`; ctx.shadowBlur=20; ctx.shadowColor='rgba(80,160,255,0.5)';
+      }
+      ctx.stroke();
+    }
+  }
+  ctx.restore();
+}
+
+function drawSectorial(ctx, t, w, h) {
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#000'; ctx.fillRect(0,0,w,h);
+  const cx=w/2, cy=0;
+  const sa=Math.PI*0.27, ea=Math.PI*0.73;
+  const maxR=Math.hypot(w*0.45,h)*1.05;
+  const N=14;
+  for(let i=0;i<N;i++){
+    const ph=((i/N)+t*0.55)%1;
+    const r=ph*maxR;
+    const a=Math.sin(ph*Math.PI);
+    if(a<0.03) continue;
+    ctx.save();
+    for(let g=4;g>=0;g--){
+      ctx.beginPath();
+      ctx.arc(cx,cy,r,sa,ea);
+      if(g===0){
+        ctx.lineWidth=1.8;
+        ctx.strokeStyle=`rgba(190,225,255,${a*0.95})`;
+        ctx.shadowBlur=0;
+      } else {
+        ctx.lineWidth=g*4.5;
+        ctx.strokeStyle=`rgba(50,130,255,${a*0.13})`;
+        ctx.shadowBlur=25; ctx.shadowColor='rgba(80,170,255,0.6)';
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+}
+
+const fns = { convexo: drawConvexo, lineal: drawLineal, sectorial: drawSectorial };
+
+function loop(ts) {
+  if(!startTs) startTs=ts;
+  const t=(ts-startTs)/3000;
+  for(const [k,c] of Object.entries(cvs)){
+    fns[k](c.getContext('2d'),t,c.width,c.height);
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+function makeSheet(type){
+  const fw=186,fh=250,cols=8,rows=4,nf=32;
+  const s=document.createElement('canvas');
+  s.width=fw*cols; s.height=fh*rows;
+  const sc=s.getContext('2d');
+  sc.fillStyle='#000'; sc.fillRect(0,0,s.width,s.height);
+  for(let f=0;f<nf;f++){
+    const fc=document.createElement('canvas'); fc.width=fw; fc.height=fh;
+    fns[type](fc.getContext('2d'),f/nf,fw,fh);
+    sc.drawImage(fc,(f%cols)*fw,Math.floor(f/cols)*fh);
+  }
+  return s;
+}
+
+function dl(type){
+  const s=makeSheet(type);
+  const a=document.createElement('a');
+  a.download=`ultrasonido_${type}_spritesheet_8x4.png`;
+  a.href=s.toDataURL('image/png'); a.click();
+}
+
+function dlAll(){
+  ['convexo','lineal','sectorial'].forEach((t,i)=>setTimeout(()=>dl(t),i*400));
+}
+</script>

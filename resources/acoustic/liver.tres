@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dv4kcmmoyfs5l"]
+
+[ext_resource type="Script" path="res://scripts/resources/AcousticProperties.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+tissue_name = "Liver"
+echogenicity = 0.55
+attenuation = 0.9
+is_hollow = false
+causes_shadow = false
+shadow_strength = 0.0
+posterior_enhancement = 0.0
+speed_of_sound = 1550.0

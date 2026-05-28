@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b4dhe7wgyociv"]
+
+[ext_resource type="Script" path="res://scripts/resources/TransducerResource.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+transducer_name = "Sectorial"
+transducer_type = 2
+field_shape = 2
+frequency = 3.0
+num_rays = 96
+max_depth = 0.30
+field_angle = 60.0
+face_width = 0.01
+arc_radius = 0.0

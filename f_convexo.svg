@@ -1,0 +1,62 @@
+<svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="abdo-bg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#0d2a35"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <filter id="glow-c">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="200" height="260" fill="url(#abdo-bg)"/>
+  <g filter="url(#glow-c)">
+    <rect x="91" y="30" width="18" height="10" rx="2" fill="#b0d8e8" opacity="0.9"/>
+    <rect x="91" y="44" width="18" height="10" rx="2" fill="#b0d8e8" opacity="0.9"/>
+    <rect x="91" y="58" width="18" height="10" rx="2" fill="#b0d8e8" opacity="0.9"/>
+    <rect x="91" y="72" width="18" height="10" rx="2" fill="#b0d8e8" opacity="0.9"/>
+    <rect x="91" y="86" width="18" height="10" rx="2" fill="#b0d8e8" opacity="0.9"/>
+    <rect x="91" y="100" width="18" height="10" rx="2" fill="#b0d8e8" opacity="0.88"/>
+    <rect x="91" y="114" width="18" height="10" rx="2" fill="#b0d8e8" opacity="0.85"/>
+    <rect x="91" y="128" width="18" height="10" rx="2" fill="#9ac8dc" opacity="0.8"/>
+    <rect x="91" y="142" width="18" height="10" rx="2" fill="#9ac8dc" opacity="0.75"/>
+    <rect x="91" y="156" width="18" height="10" rx="2" fill="#8ab8cc" opacity="0.7"/>
+    <path d="M88 170 Q100 195 112 170 Z" fill="#9ac8dc" opacity="0.85"/>
+  </g>
+  <g fill="none" stroke="#8ac8dc" stroke-width="2" stroke-linecap="round" opacity="0.75">
+    <path d="M91 35 Q55 45 40 70"/>
+    <path d="M91 49 Q52 58 36 82"/>
+    <path d="M91 63 Q50 72 35 96"/>
+    <path d="M91 77 Q50 86 37 110"/>
+    <path d="M91 91 Q52 100 40 122"/>
+    <path d="M91 105 Q55 113 44 133"/>
+    <path d="M91 119 Q58 126 50 144"/>
+  </g>
+  <g fill="none" stroke="#8ac8dc" stroke-width="2" stroke-linecap="round" opacity="0.75">
+    <path d="M109 35 Q145 45 160 70"/>
+    <path d="M109 49 Q148 58 164 82"/>
+    <path d="M109 63 Q150 72 165 96"/>
+    <path d="M109 77 Q150 86 163 110"/>
+    <path d="M109 91 Q148 100 160 122"/>
+    <path d="M109 105 Q145 113 156 133"/>
+    <path d="M109 119 Q142 126 150 144"/>
+  </g>
+  <path d="M115 60 Q165 65 168 110 Q150 130 120 128 Q100 120 105 85 Z" fill="#1a5068" stroke="#3a9ab8" stroke-width="1.2" opacity="0.85"/>
+  <path d="M82 75 Q50 78 45 105 Q55 120 80 115 Q90 100 88 82 Z" fill="#174050" stroke="#2a8098" stroke-width="1" opacity="0.8"/>
+  <ellipse cx="100" cy="215" rx="30" ry="22" fill="#0d3545" stroke="#2a8aaa" stroke-width="1.5" opacity="0.9"/>
+  <ellipse cx="100" cy="212" rx="14" ry="10" fill="#1a5a75" opacity="0.6"/>
+  <path d="M70 190 Q40 175 38 210 Q55 225 80 220 Z" fill="#6ab8cc" stroke="#8acce0" stroke-width="1" opacity="0.6"/>
+  <path d="M130 190 Q160 175 162 210 Q145 225 120 220 Z" fill="#6ab8cc" stroke="#8acce0" stroke-width="1" opacity="0.6"/>
+  <path d="M30 52 Q100 30 170 52" fill="none" stroke="#4ab0c8" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+  <line x1="10" y1="30" x2="10" y2="240" stroke="#004d60" stroke-width="0.5"/>
+  <line x1="10" y1="30" x2="15" y2="30" stroke="#004d60" stroke-width="0.5"/>
+  <line x1="10" y1="80" x2="15" y2="80" stroke="#004d60" stroke-width="0.5"/>
+  <line x1="10" y1="130" x2="15" y2="130" stroke="#004d60" stroke-width="0.5"/>
+  <line x1="10" y1="180" x2="15" y2="180" stroke="#004d60" stroke-width="0.5"/>
+  <line x1="10" y1="240" x2="15" y2="240" stroke="#004d60" stroke-width="0.5"/>
+  <text x="4" y="29" font-family="monospace" font-size="5" fill="#004d60">1</text>
+  <text x="4" y="79" font-family="monospace" font-size="5" fill="#004d60">2</text>
+  <text x="4" y="129" font-family="monospace" font-size="5" fill="#004d60">3</text>
+  <text x="4" y="179" font-family="monospace" font-size="5" fill="#004d60">4</text>
+  <text x="4" y="239" font-family="monospace" font-size="5" fill="#004d60">5</text>
+</svg>

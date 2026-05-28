@@ -1,0 +1,252 @@
+[gd_scene format=3 uid="uid://durqwi0c6bs04"]
+
+[ext_resource type="Script" path="res://scripts/UltrasoundUI.gd" id="1_4f3ld"]
+[ext_resource type="Script" path="res://scripts/UltrasoundImage.gd" id="2_6g8hj"]
+[ext_resource type="Shader" path="res://shaders/ultrasound_image.gdshader" id="3_1kf9m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1kf9m"]
+shader = ExtResource("3_1kf9m")
+shader_parameter/raw_data = null
+shader_parameter/gain = 1.0
+shader_parameter/depth_m = 0.15
+shader_parameter/transducer_type = 0
+shader_parameter/time = 0.0
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.024, 0.071, 0.094, 0.95)
+border_width_left = 1
+border_width_right = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0, 0.302, 0.376, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="BtnNormal"]
+bg_color = Color(0.02, 0.06, 0.08, 1)
+border_width_left = 1
+border_width_right = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0, 0.4, 0.5, 0.6)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="BtnPressed"]
+bg_color = Color(0, 0.15, 0.2, 1)
+border_width_left = 1
+border_width_right = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0, 0.898, 1, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="BtnHover"]
+bg_color = Color(0, 0.1, 0.14, 1)
+border_width_left = 1
+border_width_right = 1
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(0, 0.6, 0.8, 0.8)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="SliderGrabber"]
+bg_color = Color(0, 0.898, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="SliderFill"]
+bg_color = Color(0, 0.4, 0.5, 0.5)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_tr"]
+
+[node name="UltrasoundUI" type="CanvasLayer" layer=1]
+script = ExtResource("1_4f3ld")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -460.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 510.0
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ImageContainer" type="SubViewportContainer" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+stretch = true
+mouse_filter = 2
+
+[node name="UltrasoundImage" type="SubViewport" parent="Panel/VBox/ImageContainer"]
+script = ExtResource("2_6g8hj")
+size = Vector2i(400, 300)
+transparent_bg = true
+handle_input_locally = false
+
+[node name="ColorRect" type="ColorRect" parent="Panel/VBox/ImageContainer/UltrasoundImage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 1)
+material = SubResource("ShaderMaterial_1kf9m")
+
+[node name="Separator" type="HSeparator" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0.302, 0.376, 0.5)
+
+[node name="Controls" type="VBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="TransducerLabel" type="Label" parent="Panel/VBox/Controls"]
+layout_mode = 2
+text = "CONVEXO"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.4, 0.5, 0.5)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 14
+
+[node name="FreqLabel" type="Label" parent="Panel/VBox/Controls"]
+layout_mode = 2
+text = "2-5 MHz  B A J A   F R E C U E N C I A"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0, 0.6, 0.7, 1)
+theme_override_font_sizes/font_size = 8
+
+[node name="UseLabel" type="Label" parent="Panel/VBox/Controls"]
+layout_mode = 2
+text = "ABDOMEN  PELVIS  OBSTETRICIA"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0, 0.5, 0.6, 0.8)
+theme_override_font_sizes/font_size = 7
+
+[node name="BadgeLabel" type="Label" parent="Panel/VBox/Controls"]
+layout_mode = 2
+text = "POCUS ABDOMINAL"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0, 0.898, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0.3, 0.4, 0.4)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 7
+
+[node name="TransducerButtons" type="HBoxContainer" parent="Panel/VBox/Controls"]
+layout_mode = 2
+alignment = 1
+
+[node name="ConvexoBtn" type="Button" parent="Panel/VBox/Controls/TransducerButtons"]
+layout_mode = 2
+text = "CONVEXO"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tr")
+theme_override_styles/normal = SubResource("BtnNormal")
+theme_override_styles/pressed = SubResource("BtnPressed")
+theme_override_styles/hover = SubResource("BtnHover")
+theme_override_colors/font_color = Color(0, 0.898, 1, 0.8)
+theme_override_colors/font_pressed_color = Color(0, 0.898, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 9
+
+[node name="LinealBtn" type="Button" parent="Panel/VBox/Controls/TransducerButtons"]
+layout_mode = 2
+text = "LINEAL"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tr")
+theme_override_styles/normal = SubResource("BtnNormal")
+theme_override_styles/pressed = SubResource("BtnPressed")
+theme_override_styles/hover = SubResource("BtnHover")
+theme_override_colors/font_color = Color(0, 0.898, 1, 0.8)
+theme_override_colors/font_pressed_color = Color(0, 0.898, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 9
+
+[node name="SectorialBtn" type="Button" parent="Panel/VBox/Controls/TransducerButtons"]
+layout_mode = 2
+text = "SECTORIAL"
+toggle_mode = true
+button_group = SubResource("ButtonGroup_tr")
+theme_override_styles/normal = SubResource("BtnNormal")
+theme_override_styles/pressed = SubResource("BtnPressed")
+theme_override_styles/hover = SubResource("BtnHover")
+theme_override_colors/font_color = Color(0, 0.898, 1, 0.8)
+theme_override_colors/font_pressed_color = Color(0, 0.898, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 9
+
+[node name="GainLabel" type="Label" parent="Panel/VBox/Controls"]
+layout_mode = 2
+text = "GANANCIA: 100%"
+theme_override_colors/font_color = Color(0, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 10
+
+[node name="GainSlider" type="HSlider" parent="Panel/VBox/Controls"]
+layout_mode = 2
+min_value = 0.0
+max_value = 3.0
+step = 0.01
+value = 1.0
+theme_override_styles/grabber = SubResource("SliderGrabber")
+theme_override_styles/grabber_highlight = SubResource("SliderGrabber")
+theme_override_styles/fill = SubResource("SliderFill")
+
+[node name="DepthLabel" type="Label" parent="Panel/VBox/Controls"]
+layout_mode = 2
+text = "PROF: 15.0 cm"
+theme_override_colors/font_color = Color(0, 0.7, 0.8, 0.9)
+theme_override_font_sizes/font_size = 10
+
+[node name="DepthSlider" type="HSlider" parent="Panel/VBox/Controls"]
+layout_mode = 2
+min_value = 0.02
+max_value = 0.30
+step = 0.01
+value = 0.15
+theme_override_styles/grabber = SubResource("SliderGrabber")
+theme_override_styles/grabber_highlight = SubResource("SliderGrabber")
+theme_override_styles/fill = SubResource("SliderFill")
+
+[node name="FreezeBtn" type="Button" parent="Panel/VBox/Controls"]
+layout_mode = 2
+text = "CONGELAR"
+theme_override_styles/normal = SubResource("BtnNormal")
+theme_override_styles/pressed = SubResource("BtnPressed")
+theme_override_styles/hover = SubResource("BtnHover")
+theme_override_colors/font_color = Color(0, 0.898, 1, 0.8)
+theme_override_colors/font_pressed_color = Color(0, 0.898, 1, 1)
+theme_override_colors/font_hover_color = Color(0, 0.898, 1, 1)
+theme_override_font_sizes/font_size = 10
+
+

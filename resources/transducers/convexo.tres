@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bksmal0l1a86n"]
+
+[ext_resource type="Script" path="res://scripts/resources/TransducerResource.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+transducer_name = "Convexo"
+transducer_type = 0
+field_shape = 0
+frequency = 3.5
+num_rays = 96
+max_depth = 0.25
+field_angle = 90.0
+face_width = 0.04
+arc_radius = 0.01

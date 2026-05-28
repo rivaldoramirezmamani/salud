@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://c3o7lix13sfyt"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_7a4fn"]
+[ext_resource type="PackedScene" uid="uid://c6vadlsxanvr8" path="res://objetos.tscn" id="2_85ghb"]
+[ext_resource type="PackedScene" path="res://cuarto.glb" id="7_cuarto"]
+
+[sub_resource type="Environment" id="Environment_7a4fn"]
+background_mode = 2
+background_color = Color(0.698, 0.847, 0.902, 1)
+ambient_light_color = Color(0.2, 0.2, 0.22, 1)
+ambient_light_energy = 0.35
+tonemap_mode = 2
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_7a4fn")
+
+[node name="Cuarto" parent="." instance=ExtResource("7_cuarto")]
+transform = Transform3D(0.04, 0, 0, 0, 0.04, 0, 0, 0, 0.04, 0, 0, 0)
+
+[node name="objetos" parent="." instance=ExtResource("2_85ghb")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7a4fn")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.8660254, -0.5, 0, 0.3535534, 0.6123724, -0.7071068, 0.3535534, 0.6123724, 0.7071068, 0, 5, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 20
+light_energy = 1.8
+shadow_bias = 0.02
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.68, 4, 1.92)
+light_energy = 0.3
+omni_range = 10
+omni_attenuation = 0.5
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2.0, 3.5)
+current = true
