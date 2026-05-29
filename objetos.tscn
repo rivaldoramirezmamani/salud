@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bpi6k701asiv8" path="res://sectorial.glb" id="4_74x11"]
 [ext_resource type="PackedScene" uid="uid://cmhfrsq8e1glo" path="res://lineal.glb" id="5_c2ug3"]
 [ext_resource type="PackedScene" uid="uid://d303emg0vsbni" path="res://convexo.glb" id="6_yxo7t"]
+[ext_resource type="PackedScene" uid="uid://cech3pxmle38c" path="res://equipo.glb" id="7_equipo"]
 
 [node name="Node3D" type="Node3D" unique_id=2049289968]
 
@@ -26,3 +27,6 @@ transform = Transform3D(0.14130883, 0, 0, 0, -0.14130883, 0, 0, 0, -0.14130883, 
 
 [node name="convexo" parent="." unique_id=1305300364 instance=ExtResource("6_yxo7t")]
 transform = Transform3D(0.15, 0, 0, 0, -0.15, 0, 0, 0, -0.15, 3.68, 2.2, 1.6)
+
+[node name="equipo" parent="." unique_id=662882907 instance=ExtResource("7_equipo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.662, 1, 1.038)

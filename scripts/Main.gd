@@ -8,6 +8,14 @@ var active_node: Node3D = null
 var transducer_speed: float = 1.5
 var _positioned: bool = false
 
+var _anim_descending: bool = false
+var _anim_pending: bool = false
+var _anim_elapsed: float = 0.0
+var _anim_duration: float = 2.0
+const MANNEQUIN_Y: float = 0.2
+const TRANSDUCER_HOVER_Y: float = 2.2
+const TRANSDUCER_SURFACE_Y: float = 1.5
+
 var cam_target: Vector3 = Vector3(3.68, 1.0, 1.6)
 var cam_dist: float = 6.0
 var cam_rot_x: float = 0.6
@@ -215,6 +223,40 @@ func activate_transducer(type: int):
 		if ui.viewport:
 			ui.viewport.raycaster = raycaster
 		ui.update_buttons()
+	_anim_pending = true
+	if active_node:
+		active_node.position.y = TRANSDUCER_HOVER_Y
+		var w = wave_meshes.get(type)
+		if w:
+			w.scale = Vector3(1, 1, 1)
+			var transducer_y = active_node.global_position.y
+			var wave_y = (transducer_y + MANNEQUIN_Y) * 0.5
+			w.global_position = Vector3(active_node.global_position.x, wave_y, active_node.global_position.z)
+
+func _start_descent():
+	if not active_node:
+		return
+	_anim_descending = true
+	_anim_pending = false
+	_anim_elapsed = 0.0
+
+func _update_descent(delta):
+	if not active_node:
+		_anim_descending = false
+		return
+	_anim_elapsed += delta
+	var t = clamp(_anim_elapsed / _anim_duration, 0.0, 1.0)
+	active_node.position.y = lerp(TRANSDUCER_HOVER_Y, TRANSDUCER_SURFACE_Y, t)
+	var w = wave_meshes.get(TransducerController.current_type)
+	if w:
+		var transducer_y = active_node.global_position.y
+		var mid_y = (transducer_y + MANNEQUIN_Y) * 0.5
+		var wave_y = lerp(mid_y, transducer_y, t)
+		w.global_position = Vector3(active_node.global_position.x, wave_y, active_node.global_position.z)
+		var s = lerp(1.0, 0.03, t)
+		w.scale = Vector3(s, s, s)
+	if t >= 1.0:
+		_anim_descending = false
 
 func position_transducers_near_mannequin():
 	var transducer_names = ["convexo", "lineal", "sectorial"]
@@ -251,7 +293,11 @@ func _process(delta):
 			t.origin = Vector3(3.68, 0.2, 1.6)
 			m.transform = t
 		position_transducers_near_mannequin()
+	if _anim_pending:
+		_start_descent()
 	update_camera()
+	if _anim_descending:
+		_update_descent(delta)
 	move_transducer(delta)
 	billboard_waves()
 
